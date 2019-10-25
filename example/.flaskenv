@@ -1,0 +1,2 @@
+FLASK_APP=dropblog
+FLASK_ENV=development

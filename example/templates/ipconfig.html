@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block hrefs %}
+    <a href="{{ vars_url }}"
+       class="list-group-item waves-effect"
+       style="text-align: center"> 数据采集配置表 </a>
+    <a href="{{ download_page_url }}"
+       class="list-group-item waves-effect"
+       style="text-align: center"> 数据下载 </a>
+    <a href="{{ ipconfig_url }}"
+       class="list-group-item active waves-effect"
+       style="text-align: center"> 更改IP地址 </a>
+{% endblock %}
+{% block table %}
+    <!-- IP输入组件 开始 -->
+    <script>
+        var result_text;
+
+
+        function ip_process(cmd) {
+            var ajaxObj = new XMLHttpRequest();
+            ajaxObj.open('get', 'http://'+tq_ip+':5000/api/' + cmd);
+            ajaxObj.send();
+            ajaxObj.onreadystatechange = function () {
+                if (ajaxObj.readyState === 4 && ajaxObj.status === 200) {
+                    {#console.log('数据返回成功');#}
+                    result_text = ajaxObj.responseText;
+                    {#console.log(ajaxObj.responseText);#}
+                    if (cmd === 'read_ip') {
+                        document.getElementById('ip_old').innerHTML = 'IP address(current): ' + ajaxObj.responseText;
+                    }
+                }
+            };
+        }
+
+        function get_ip() {
+            var ip = document.getElementById("ip").value;
+            ip_process('change_ip/' + ip);
+            window.location.reload();
+        }
+
+
+    </script>
+    <script>
+        ip_process('read_ip')
+    </script>
+    <h2>
+        PLC_IP更改
+    </h2>
+    <form role="form" id="my-form">
+        <div class="form-group">
+            <p id="ip_old"></p>
+            <input type="text" class="form-control" id="ip" name="ip" data-inputmask="'alias': 'ip'"/>
+        </div>
+        <input type="button" value="确认更改" class="btn btn-success pull-right"
+               onclick="get_ip()"/>
+    </form>
+
+    <!-- IP输入组件 结束 -->
+{% endblock %}

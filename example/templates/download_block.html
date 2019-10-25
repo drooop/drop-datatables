@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block hrefs %}
+    <a href="{{ vars_url }}"
+       class="list-group-item waves-effect"
+       style="text-align: center"> 数据采集配置表 </a>
+    <a href="{{ download_page_url }}"
+       class="list-group-item active waves-effect"
+       style="text-align: center"> 数据下载 </a>
+    <a href="{{ ipconfig_url }}"
+       class="list-group-item waves-effect"
+       style="text-align: center"> 更改IP地址 </a>
+{% endblock %}
+{% block table %}
+    <table id="drop_table" class='table table-hover table-striped table-bordered table-sm' cellspacing="0"
+           width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+    </table>
+{% endblock %}
+{% block button_function %}
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" id="delete-rows" class="btn btn-danger pull-right invisible"> Download</button>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/vanilla_bak.js') }}"></script>
+{% endblock %}
